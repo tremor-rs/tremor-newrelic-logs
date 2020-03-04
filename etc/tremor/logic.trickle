@@ -1,0 +1,8 @@
+select
+  match event of
+    case %{ present application, present date, present message } =>
+      { "ok": merge event of { "host": system::hostname() } end }
+    default => { "error": "invalid", "got": event }
+  end
+from in into out;
+

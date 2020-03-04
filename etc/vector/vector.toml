@@ -1,0 +1,28 @@
+# Use a file based data source
+[sinks.out]
+  type = "file"
+  inputs = ["tcp"]
+  path = "received-%Y-%m-%d.log"
+  encoding = "ndjson"
+  healthcheck = true 
+
+[sinks.newrelic]
+  type = "new_relic_logs"
+  inputs = ["tcp"]
+  encoding = "json"
+  healthcheck = true
+  insert_key = "insert-a-newrelic-insert-key-here"
+  license_key = "insert-a-newrelic-license-key-here"
+  region = "us" # either 'eu' or 'us' depending on your account setup
+
+[sinks.console]
+  type = "console"
+  encoding = "json"
+  inputs = [ "tcp" ]
+
+[sources.tcp]
+  type = "socket"
+  address = "0.0.0.0:8888"
+  mode = "tcp"
+  host_key = "host" # default
+
